@@ -5,7 +5,17 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
-        const series = await Series.find();
+        const series = await Series.find().limit(20);
+        res.json(series);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+router.get('/curating', async (req, res, next) => {
+    try {
+        const series = await Series.find().limit(10).sort({createdAt:-1});
         res.json(series);
     } catch (error) {
         console.error(error);
